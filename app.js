@@ -33,6 +33,7 @@ const User = require("./api/server/src/models/user");
 const Expense = require("./api/server/src/models/expenses");
 const Order = require("./api/server/src/models/order");
 const ForgetPassword = require("./api/server/src/models/forgetPassword");
+const FileRecords = require("./api/server/src/models/FileRecords");
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
@@ -42,6 +43,9 @@ Order.belongsTo(User);
 
 User.hasMany(ForgetPassword);
 ForgetPassword.belongsTo(User);
+
+User.hasMany(FileRecords);
+FileRecords.belongsTo(User);
 
 sequelize
   .sync()
