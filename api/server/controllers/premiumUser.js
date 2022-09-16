@@ -2,6 +2,7 @@ const Order = require("../src/models/order");
 const Razopay = require("razorpay");
 const User = require("../src/models/user");
 const Expenses = require("../src/models/expenses");
+const FileRecord = require("../src/models/FileRecords");
 const S3Service = require("../services/S3Service");
 
 ///////////////////////////////////////////////
@@ -108,4 +109,22 @@ exports.download = async (req, res, next) => {
   } catch (err) {
     return res.status(500).json({ fileUrl: "", success: false, error: err });
   }
+};
+
+///////////////////////////////////////////////
+// record of downloaded-report
+///////////////////////////////////////////////
+
+exports.postFile = async (req, res, next) => {
+  const fileURL = req.body.fileURL;
+
+  await FileRecord.create({ fileUrl: fileURL, userId: req.id }).then(() => {
+    return res.status(200).json("successfully inserted");
+  });
+};
+
+exports.getFile = async (req, res, next) => {
+  await FileRecord.findAll({ where: { id: req.id } }).then((records) => {
+    res.status(200).json({ records: records, success: true });
+  });
 };

@@ -22,7 +22,6 @@ router.post(
 );
 
 router.post("/order", middleware.authenticate, premiumController.postOrder);
-
 //router.post(
 //  "/checkout",
 //  middleware.authenticate,
@@ -32,7 +31,8 @@ router.post("/verify", middleware.authenticate, premiumController.verifyOrder);
 
 // router.get("/report", middleware.authenticate, premiumController.getReport);
 router.get("/download", middleware.authenticate, premiumController.download);
-
+router.post("/postFile", middleware.authenticate, premiumController.postFile);
+router.get("/getFile", middleware.authenticate, premiumController.getFile);
 //router.post("/password/forgotpassword", authController.postMail);
 
 module.exports = router;
