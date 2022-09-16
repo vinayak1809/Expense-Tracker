@@ -3,18 +3,29 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const helmet = require("helmet");
+const morgan = require("morgan");
+const fs = require("fs");
+
 const app = express();
 
-app.use(express.static(path.join(__dirname, "/api/server/public")));
-
-//app.set("view engine", "ejs");
-//app.set("views", path.join(__dirname, "/api/server/views"));
-
 // app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "/api/server/public")));
 app.use(bodyParser.json());
 app.use(cors());
 
 dotenv.config();
+app.use(helmet());
+
+//keeping track of request made
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  {
+    flags: "a",
+  }
+);
+app.use(morgan("combined", { stream: accessLogStream }));
 
 ////////////////////////////////////////////////////
 //routes
@@ -50,7 +61,7 @@ FileRecords.belongsTo(User);
 sequelize
   .sync()
   .then(() => {
-    app.listen(4000);
+    app.listen(process.env.PORT || 4000);
   })
   .catch((err) => {
     console.log(err);
