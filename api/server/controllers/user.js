@@ -2,11 +2,10 @@ const express = require("express");
 const Expenses = require("../src/models/expenses");
 const JSAlert = require("alert");
 const ITEMS_PER_PAGE = 3;
-const page = 2;
 
 exports.getExpenses = function (req, res, next) {
   const page = +req.query.page || 1;
-  console.log(page);
+
   return Expenses.findAll({
     offset: (page - 1) * ITEMS_PER_PAGE,
     limit: ITEMS_PER_PAGE,
