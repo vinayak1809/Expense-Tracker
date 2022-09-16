@@ -1,6 +1,7 @@
 const url = "http://localhost:4000";
 const token = localStorage.getItem("token");
 const thirty = document.getElementById("30");
+const threeSixFive = document.getElementById("365");
 
 ///////////////////////////////////////////////
 // package selection
@@ -28,8 +29,6 @@ thirty.addEventListener("click", async function () {
       rzp_text.value = result.data.order.id;
     });
 });
-
-const threeSixFive = document.getElementById("365");
 
 threeSixFive.addEventListener("click", async function () {
   await axios
@@ -59,7 +58,7 @@ threeSixFive.addEventListener("click", async function () {
 
 function createe() {
   var options = {
-    key: "rzp_test_IeLLvZzDg1jvE1", // razorpay key
+    key: "", // razorpay key
     currency: "INR",
     name: "Razor Tutorial",
     description: "Razor Test Transaction",
