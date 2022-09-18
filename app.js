@@ -21,7 +21,7 @@ app.use(helmet());
 ////////////////////////////////////////////////////
 //routes
 ////////////////////////////////////////////////////
-console.log("testing");
+
 const authRoutes = require("./api/server/routes/authRoutes");
 const userRoutes = require("./api/server/routes/userRoutes");
 const premiumUserRoutes = require("./api/server/routes/premiumUserRoutes");
