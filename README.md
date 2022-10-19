@@ -1,4 +1,4 @@
-# Chat-Application
+# Expense-Tracker
 Expense-Tracker with Express.js and MySQL. This Web-application contains features like: <br>
      &nbsp;> &nbsp; User can Login and Sign-up      <br>                                                                                                        &nbsp;> &nbsp; User can add, remove and edit expense <br> 
      &nbsp;> &nbsp; Can take advantages of Premium-Membership using RazorPay <br>
@@ -12,7 +12,7 @@ Expense-Tracker with Express.js and MySQL. This Web-application contains feature
 # Setup
 ```
      $ git clone https://github.com/vinayak1809/Expense-Tracker.git
-     $ cd chat-application   
+     $ cd Expense-Tracker   
      $ npm i
 ```
 # Run the Project
