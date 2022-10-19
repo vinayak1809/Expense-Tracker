@@ -14,6 +14,7 @@ Expense-Tracker with Express.js and MySQL. This Web-application contains feature
      $ git clone https://github.com/vinayak1809/Expense-Tracker.git
      $ cd Expense-Tracker   
      $ npm i
+     $ Change Database Username and Pasword 
 ```
 # Run the Project
 ```
