@@ -3,8 +3,6 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const helmet = require("helmet");
-const fs = require("fs");
 
 const app = express();
 
@@ -14,7 +12,6 @@ app.use(bodyParser.json());
 app.use(cors());
 
 dotenv.config();
-app.use(helmet());
 
 //keeping track of request made
 
@@ -57,7 +54,7 @@ FileRecords.belongsTo(User);
 sequelize
   .sync()
   .then(() => {
-    app.listen(process.env.PORT || 4000);
+    app.listen(process.env.PORT || 5000);
   })
   .catch((err) => {
     console.log(err);
