@@ -5,8 +5,9 @@ const authenticate = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.TOKEN_SECRET);
-
+    console.log(decoded, "decoded");
     req.id = decoded.id;
+    req.premium = decoded.premium;
 
     next();
   } catch (err) {
