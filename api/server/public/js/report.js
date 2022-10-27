@@ -22,9 +22,9 @@ function addURL(URL) {
   link.appendChild(anchorTag);
 }
 
-async function downloadbtn() {
+async function genarateReport() {
   const done = await axios
-    .get(`${url}/download`, {
+    .get(`${url}/report`, {
       headers: { authorization: token },
     })
     .then((response) => {
@@ -35,7 +35,7 @@ async function downloadbtn() {
       }
     })
     .catch((err) => {
-      console.log("errrr:", err.status);
+      console.log("errrr:", err);
     });
 }
 

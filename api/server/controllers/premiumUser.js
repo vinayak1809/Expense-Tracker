@@ -5,6 +5,13 @@ const Expenses = require("../src/models/expenses");
 const FileRecord = require("../src/models/FileRecords");
 const S3Service = require("../services/S3Service");
 
+const fs = require("fs");
+const path = require("path");
+const util = require("util");
+const puppeteer = require("puppeteer");
+const hb = require("handlebars");
+const readFile = util.promisify(fs.readFile);
+
 ///////////////////////////////////////////////
 // create-order
 ///////////////////////////////////////////////
@@ -83,35 +90,64 @@ exports.verifyOrder = async (req, res, next) => {
 // genarate-report
 ///////////////////////////////////////////////
 
-// exports.getReport = (req, res, next) => {
-//   Expenses.findAll({ where: { id: req.id } })
-//     .then((records) => {
-//       res.status(200).json(records);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// };
+exports.getReport = async (req, res, next) => {
+  let data = {};
+  getTemplateHtml()
+    .then(async (res) => {
+      console.log("Compiing the template with handlebars");
+      const template = hb.compile(res, { strict: true });
 
-///////////////////////////////////////////////
-// download-report
-///////////////////////////////////////////////
+      const result = template(data);
 
-exports.download = async (req, res, next) => {
-  try {
-    const expenses = await Expenses.findAll({ where: { id: req.id } });
+      const html = result;
 
-    const StringifyData = JSON.stringify(expenses);
-    const user = req.id;
-    const fileName = `expenseReport${user}.txt`;
+      const browser = await puppeteer.launch();
+      const page = await browser.newPage();
 
-    const fileUrl = await S3Service.uploadToS3(StringifyData, fileName);
+      await page.setContent(html);
 
-    return res.status(200).json({ fileUrl, success: true });
-  } catch (err) {
-    return res.status(500).json({ fileUrl: "", success: false, error: err });
-  }
+      await page.pdf({ path: "invoice.pdf", format: "A4" });
+      await browser.close();
+      console.log("PDF Generated");
+    })
+    .catch((err) => {
+      console.error(err);
+    });
 };
+
+async function getTemplateHtml() {
+  console.log("Loading template file in memory");
+
+  try {
+    const invoicePath = path.resolve(__dirname, "../public/report.html");
+    const a = await readFile(invoicePath, "utf8");
+
+    return a;
+  } catch (err) {
+    console.log(err, "errerr");
+    return Promise.reject("Could not load html template");
+  }
+}
+
+///////////////////////////////////////////////
+// download-report with AWS
+///////////////////////////////////////////////
+
+//exports.download = async (req, res, next) => {
+//  try {
+//    const expenses = await Expenses.findAll({ where: { id: req.id } });
+//
+//    const StringifyData = JSON.stringify(expenses);
+//    const user = req.id;
+//    const fileName = `expenseReport${user}.txt`;
+//
+//    const fileUrl = await S3Service.uploadToS3(StringifyData, fileName);
+//
+//    return res.status(200).json({ fileUrl, success: true });
+//  } catch (err) {
+//    return res.status(500).json({ fileUrl: "", success: false, error: err });
+//  }
+//};
 
 ///////////////////////////////////////////////
 // record of downloaded-report
