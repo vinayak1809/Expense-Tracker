@@ -1,3 +1,8 @@
+const token = localStorage.getItem("token");
+if (token) {
+  window.location.href = "http://localhost:4000/add-expense.html";
+}
+
 async function saveuser(event) {
   event.preventDefault();
   const form = new FormData(event.target);
