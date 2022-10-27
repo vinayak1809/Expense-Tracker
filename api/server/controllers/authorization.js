@@ -90,7 +90,10 @@ exports.postLogin = (req, res, next) => {
           if (err) {
             return res.status(402).json("something went wrong");
           } else if (result) {
-            const token = generateAccessToken({ id: user[0].id });
+            const token = generateAccessToken({
+              id: user[0].id,
+              premium: user[0].ispremiumuser,
+            });
             res.status(200).json({
               token: token,
               success: true,
