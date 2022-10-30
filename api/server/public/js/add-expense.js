@@ -1,4 +1,5 @@
 const token = localStorage.getItem("token");
+const premium = localStorage.getItem("premium");
 let page = 1;
 
 const previous = document.getElementById("previous");
@@ -8,9 +9,10 @@ var itemNum = localStorage.getItem("NumberOfExpense");
 if (token) {
   document.getElementById("login").classList.add("display-nav");
   document.getElementById("signup").classList.add("display-nav");
-  if (premium) {
-    document.getElementById("tryPremium").classList.add("display-nav");
+  if (premium == "true") {
     document.getElementById("premium").classList.remove("display-nav");
+  } else {
+    document.getElementById("tryPremium").classList.remove("display-nav");
   }
 } else {
   document.getElementById("logout").classList.add("display-nav");
@@ -61,7 +63,7 @@ function showExpense(expenseList) {
   const premium = localStorage.getItem("premium");
   const expensesList = document.getElementById("expense-list");
 
-  if (premium) {
+  if (premium == true) {
     document.body.classList.toggle("dark-mode");
   }
   expensesList.innerHTML = "";
@@ -94,7 +96,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     .then((result) => {
       previous.style.display = "none";
       localStorage.setItem("premium", result.data.premium);
-      showExpense(result.data);
+      showExpense(result.data.expense);
     });
 });
 ////////////////////////////////////////////////////
