@@ -10,6 +10,7 @@ const path = require("path");
 const util = require("util");
 const puppeteer = require("puppeteer");
 const hb = require("handlebars");
+const { resolve } = require("path");
 const readFile = util.promisify(fs.readFile);
 
 ///////////////////////////////////////////////
@@ -92,7 +93,7 @@ exports.verifyOrder = async (req, res, next) => {
 
 exports.getReport = async (req, res, next) => {
   let data = {};
-  getTemplateHtml()
+  const doit = await getTemplateHtml()
     .then(async (res) => {
       console.log("Compiing the template with handlebars");
       const template = hb.compile(res, { strict: true });
@@ -105,14 +106,29 @@ exports.getReport = async (req, res, next) => {
       const page = await browser.newPage();
 
       await page.setContent(html);
+      const fileName = Date.now();
+      const file = `./api/server/public/reports/${fileName}.pdf`;
 
-      await page.pdf({ path: "invoice.pdf", format: "A4" });
+      await FileRecord.create({
+        fileUrl: `reports/${fileName}.pdf`,
+        userId: req.id,
+      });
+
+      await page.pdf({ path: file, format: "A4" });
+
       await browser.close();
       console.log("PDF Generated");
+
+      return `reports/${fileName}.pdf`;
     })
     .catch((err) => {
       console.error(err);
     });
+  res.json({
+    success: true,
+    message: "PDF Generated",
+    fileUrl: doit,
+  });
 };
 
 async function getTemplateHtml() {
@@ -121,10 +137,9 @@ async function getTemplateHtml() {
   try {
     const invoicePath = path.resolve(__dirname, "../public/report.html");
     const a = await readFile(invoicePath, "utf8");
-
+    console.log(invoicePath, "involi");
     return a;
   } catch (err) {
-    console.log(err, "errerr");
     return Promise.reject("Could not load html template");
   }
 }

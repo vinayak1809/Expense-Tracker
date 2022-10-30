@@ -5,6 +5,17 @@ const previous = document.getElementById("previous");
 const next = document.getElementById("next");
 var itemNum = localStorage.getItem("NumberOfExpense");
 
+if (token) {
+  document.getElementById("login").classList.add("display-nav");
+  document.getElementById("signup").classList.add("display-nav");
+  if (premium) {
+    document.getElementById("tryPremium").classList.add("display-nav");
+    document.getElementById("premium").classList.remove("display-nav");
+  }
+} else {
+  document.getElementById("logout").classList.add("display-nav");
+}
+
 ////////////////////////////////////////////////////
 // pagination
 ////////////////////////////////////////////////////
@@ -12,11 +23,10 @@ var itemNum = localStorage.getItem("NumberOfExpense");
 async function callPage(event) {
   event.preventDefault();
 
-  var itemNum = localStorage.getItem("NumberOfExpense");
+  var itemNum = localStorage.getItem("NumberOfExpense") || 3;
 
   if (event.target.id == "next") {
     previous.style.display = "block";
-
     page = page + 1;
 
     await axios
@@ -25,7 +35,7 @@ async function callPage(event) {
       })
       .then((result) => {
         if (result.data.length != 0) {
-          showExpense(result.data);
+          showExpense(result.data.expense);
         } else {
           next.style.display = "none";
         }
@@ -38,7 +48,7 @@ async function callPage(event) {
         headers: { authorization: token },
       })
       .then((result) => {
-        showExpense(result.data);
+        showExpense(result.data.expense);
       });
   }
 }
@@ -83,6 +93,7 @@ window.addEventListener("DOMContentLoaded", async () => {
     })
     .then((result) => {
       previous.style.display = "none";
+      localStorage.setItem("premium", result.data.premium);
       showExpense(result.data);
     });
 });
@@ -161,3 +172,12 @@ input.addEventListener("input", updateValue);
 function updateValue(e) {
   localStorage.setItem("NumberOfExpense", e.target.value);
 }
+
+////////////////////////////////////////////////////
+// logout user
+////////////////////////////////////////////////////
+const logout = document.getElementById("logout");
+
+logout.addEventListener("click", () => {
+  localStorage.clear();
+});
