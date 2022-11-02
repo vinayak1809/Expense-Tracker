@@ -21,7 +21,6 @@ if (token) {
 ////////////////////////////////////////////////////
 // pagination
 ////////////////////////////////////////////////////
-
 async function callPage(event) {
   event.preventDefault();
 
@@ -36,8 +35,11 @@ async function callPage(event) {
         headers: { authorization: token },
       })
       .then((result) => {
+        if (page == result.data.expense.count) {
+          document.getElementById("next").style.display = "none";
+        }
         if (result.data.length != 0) {
-          showExpense(result.data.expense);
+          showExpense(result.data.expense.rows);
         } else {
           next.style.display = "none";
         }
@@ -50,7 +52,10 @@ async function callPage(event) {
         headers: { authorization: token },
       })
       .then((result) => {
-        showExpense(result.data.expense);
+        if (page == 1) {
+          document.getElementById("previous").style.display = "none";
+        }
+        showExpense(result.data.expense.rows);
       });
   }
 }
@@ -96,11 +101,9 @@ window.addEventListener("DOMContentLoaded", async () => {
     .then((result) => {
       previous.style.display = "none";
       localStorage.setItem("premium", result.data.premium);
-      showExpense(result.data.expense);
+      showExpense(result.data.expense.rows);
     })
-    .catch((err) => {
-      localStorage.clear();
-    });
+    .catch((err) => {});
 });
 
 ////////////////////////////////////////////////////
