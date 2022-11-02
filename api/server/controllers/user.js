@@ -43,6 +43,41 @@ exports.addExpense = function (req, res, next) {
     });
 };
 
+exports.getEditExpense = (req, res, next) => {
+  const id = req.query.id;
+  try {
+    Expenses.findAll({ where: { id: id, userId: req.id } }).then((expense) => {
+      res.status(200).json({ success: true, expense: expense });
+    });
+  } catch {
+    console.log(err, "error in edit expense");
+  }
+};
+
+exports.postEditExpense = (req, res) => {
+  const id = req.body.id;
+  const category = req.body.category;
+  const description = req.body.description;
+  const amount = req.body.amount;
+
+  if (category.length == 0 || description.length == 0 || amount.length == 0) {
+    return res
+      .status(400)
+      .json({ success: false, message: "parameter missing" });
+  }
+
+  Expenses.update(
+    {
+      category: category,
+      description: description,
+      amount: amount,
+    },
+    { where: { id: id, userId: req.id } }
+  ).then((expense) => {
+    res.status(200).json({ success: true, message: "Item edited" });
+  });
+};
+
 exports.deleteExpense = (req, res, next) => {
   const id = req.body.id;
   console.log("req.id>>>>>>", req.id, id);

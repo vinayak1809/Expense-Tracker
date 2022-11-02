@@ -79,7 +79,7 @@ function showExpense(expenseList) {
             <li id="desc">${expense.description}</li>
         </div>
         <div class="perform">
-        <button><span class="material-symbols-outlined">edit</span></button>
+        <button onclick="getEditExpense(${expense.id})"><span class="material-symbols-outlined">edit</span></button>
         <button onclick="deleteExpense(${expense.id})"><span class="material-symbols-outlined">delete</span></button>
         </div>
     `;
@@ -97,8 +97,12 @@ window.addEventListener("DOMContentLoaded", async () => {
       previous.style.display = "none";
       localStorage.setItem("premium", result.data.premium);
       showExpense(result.data.expense);
+    })
+    .catch((err) => {
+      localStorage.clear();
     });
 });
+
 ////////////////////////////////////////////////////
 // save expense
 ////////////////////////////////////////////////////
@@ -108,24 +112,35 @@ async function saveExpense(event) {
   const form = new FormData(event.target);
 
   const addExpense = {
+    id: form.get("id"),
     category: form.get("category"),
     description: form.get("description"),
     amount: form.get("amount"),
   };
+  if (addExpense.id) {
+    console.log("nth");
+    const addExp = await axios
+      .post("http://localhost:4000/edit-expense", addExpense, {
+        headers: { authorization: token },
+      })
+      .then((result) => {
+        alert("item edited");
+      });
+  } else {
+    const log = await axios
+      .post("http://localhost:4000/add-expense", addExpense, {
+        headers: { authorization: token },
+      })
+      .then((result) => {
+        alert("Item added");
 
-  const log = await axios
-    .post("http://localhost:4000/add-expense", addExpense, {
-      headers: { authorization: token },
-    })
-    .then((result) => {
-      alert("Item added");
-
-      showExpense([addExpense]);
-      // location.href = "http://localhost:4000/add-expense.html";
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+        showExpense([addExpense]);
+        // location.href = "http://localhost:4000/add-expense.html";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 }
 ////////////////////////////////////////////////////
 // delete expense
@@ -153,6 +168,27 @@ async function deleteExpense(id) {
     });
 }
 
+////////////////////////////////////////////////////
+// edit expense
+////////////////////////////////////////////////////
+
+async function getEditExpense(id) {
+  data = { id: id };
+  const edit_expense = await axios
+    .get(`http://localhost:4000/edit-expense/?id=${id}`, {
+      headers: { authorization: token },
+    })
+    .then((result) => {
+      const expense = result.data.expense[0];
+      document.getElementById("id").value = expense.id;
+      document.getElementById("category").value = expense.category;
+      document.getElementById("description").value = expense.description;
+      document.getElementById("amount").value = expense.amount;
+    })
+    .catch((err) => {
+      console.log("error in edit expense", err);
+    });
+}
 // document.getElementById("cate").addEventListener("mouseover", mouseOver);
 // document.getElementById("cate").addEventListener("mouseout", mouseOut);
 
@@ -182,4 +218,16 @@ const logout = document.getElementById("logout");
 
 logout.addEventListener("click", () => {
   localStorage.clear();
+});
+
+////////////////////////////////////////////////////
+// clear all fields onclick new expense
+////////////////////////////////////////////////////
+
+const newExp = document.getElementById("newExp");
+newExp.addEventListener("click", () => {
+  document.getElementById("id").value = "";
+  document.getElementById("category").value = "petrol";
+  document.getElementById("description").value = "";
+  document.getElementById("amount").value = "";
 });
