@@ -39,7 +39,10 @@ async function callPage(event) {
           document.getElementById("next").style.display = "none";
         }
         if (result.data.length != 0) {
-          showExpense(result.data.expense.rows);
+          const rows = result.data.expense.rows;
+          const sumOfExpense = result.data.sum[0]["SUM(`amount`)"];
+
+          showExpense(rows, sumOfExpense);
         } else {
           next.style.display = "none";
         }
@@ -55,7 +58,13 @@ async function callPage(event) {
         if (page == 1) {
           document.getElementById("previous").style.display = "none";
         }
-        showExpense(result.data.expense.rows);
+        if (page < result.data.expense.count) {
+          document.getElementById("next").style.display = "block";
+        }
+        const rows = result.data.expense.rows;
+        const sumOfExpense = result.data.sum[0]["SUM(`amount`)"];
+
+        showExpense(rows, sumOfExpense);
       });
   }
 }
@@ -64,7 +73,7 @@ async function callPage(event) {
 // display expense
 ////////////////////////////////////////////////////
 
-function showExpense(expenseList) {
+function showExpense(expenseList, sumOfExpense) {
   const premium = localStorage.getItem("premium");
   const expensesList = document.getElementById("expense-list");
 
@@ -89,6 +98,10 @@ function showExpense(expenseList) {
         </div>
     `;
 
+    document.getElementById(
+      "sum-of-expense"
+    ).innerHTML = `Sum of Expense: ${sumOfExpense}`;
+
     expensesList.appendChild(div);
   });
 }
@@ -101,7 +114,11 @@ window.addEventListener("DOMContentLoaded", async () => {
     .then((result) => {
       previous.style.display = "none";
       localStorage.setItem("premium", result.data.premium);
-      showExpense(result.data.expense.rows);
+
+      const rows = result.data.expense.rows;
+      const sumOfExpense = result.data.sum[0]["SUM(`amount`)"];
+
+      showExpense(rows, sumOfExpense);
     })
     .catch((err) => {});
 });
