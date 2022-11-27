@@ -10,7 +10,6 @@ const path = require("path");
 const util = require("util");
 const puppeteer = require("puppeteer");
 const hb = require("handlebars");
-const { resolve } = require("path");
 const readFile = util.promisify(fs.readFile);
 
 ///////////////////////////////////////////////

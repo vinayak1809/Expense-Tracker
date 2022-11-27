@@ -1,20 +1,26 @@
 const express = require("express");
 const Expenses = require("../src/models/expenses");
 const JSAlert = require("alert");
+const sequelize = require("sequelize");
 const page = 2;
 
-exports.getExpenses = function (req, res, next) {
+exports.getExpenses = async (req, res, next) => {
   const page = +req.query.page || 1;
   const ITEMS_PER_PAGE = +req.query.item || 1;
 
+  const sum = await Expenses.findAll({
+    where: { userId: req.id },
+    attributes: [sequelize.fn("SUM", sequelize.col("amount"))],
+    raw: true,
+  });
+
   return Expenses.findAndCountAll({
     where: { userId: req.id },
-
     offset: (page - 1) * ITEMS_PER_PAGE,
     limit: ITEMS_PER_PAGE,
   }).then((expense) => {
-    console.log(expense.count, expense.rows);
-    res.json({ expense: expense, premium: req.premium });
+    //console.log(expense.count, expense.rows);
+    res.json({ sum: sum, expense: expense, premium: req.premium });
   });
 };
 
