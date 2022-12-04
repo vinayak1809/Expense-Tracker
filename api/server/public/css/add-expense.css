@@ -41,6 +41,7 @@ main{
     justify-content: space-between;
     flex-direction: row;
     margin-top: 10px;
+    width: 100%;
 }
 .expenses{
     display: flex;
@@ -81,7 +82,7 @@ li#desc{
 /* add expense section */
 /* //////////////////////////////////////////////////// */
 
-.add-expense{
+.cred-deb{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -125,4 +126,19 @@ form > button{
 
 .display-nav{
     display: none;
+}
+
+.credit{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
+.debit{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
 }

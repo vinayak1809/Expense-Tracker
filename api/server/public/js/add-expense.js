@@ -75,7 +75,7 @@ async function callPage(event) {
 
 function showExpense(expenseList, sumOfExpense) {
   const premium = localStorage.getItem("premium");
-  const expensesList = document.getElementById("expense-list");
+  const expensesList = document.getElementById("debit-list");
 
   if (premium == true) {
     document.body.classList.toggle("dark-mode");
@@ -120,7 +120,9 @@ window.addEventListener("DOMContentLoaded", async () => {
 
       showExpense(rows, sumOfExpense);
     })
-    .catch((err) => {});
+    .catch((err) => {
+      localStorage.clear();
+    });
 });
 
 ////////////////////////////////////////////////////
@@ -138,7 +140,6 @@ async function saveExpense(event) {
     amount: form.get("amount"),
   };
   if (addExpense.id) {
-    console.log("nth");
     const addExp = await axios
       .post("http://localhost:4000/edit-expense", addExpense, {
         headers: { authorization: token },
@@ -153,7 +154,6 @@ async function saveExpense(event) {
       })
       .then((result) => {
         alert("Item added");
-
         showExpense([addExpense]);
         // location.href = "http://localhost:4000/add-expense.html";
       })

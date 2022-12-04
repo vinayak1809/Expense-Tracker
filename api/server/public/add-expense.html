@@ -23,14 +23,25 @@
         </div>
     </nav>
     <main>
+           
+          <section class="credit">
+            <section class="cred-deb">
+                <h3>Add Credit</h3>
+                <form onsubmit="saveCreditExpense(event)" method="POST">
+                    <input type="text" name="id" id="id" style="display: none;">
+                    <input type="text" name="description" id="description" placeholder="Describe here">
+                    <input type="text" name="amount" id="amount" placeholder="Amount">
+                    <button type="submit">Credit</button>
+                </form> 
+                <button id="newExp">click to clear above fields</button>
+            </section>
             <section class="expenses">
-                <p>Expenses</p> 
+                <p>Credit Expenses</p> 
                 <input placeholder="Amount of expenses to load" name="name"/>
                    
-                <div id="expense-list" class="expense-list">
+                <div id="credit-list" class="expense-list">
                     <div class="list">
                         <div class="show">
-                            <li id="cate">Category</li>
                             <li>amount</li>
                             <li id="desc">description</li>
                         </div>
@@ -40,32 +51,60 @@
                         </div>
                     </div>
                 </div> 
-                <h5 id="sum-of-expense"></h5>
+                <h5 id="sum-of-credit">sum-of-credit</h5>
                 <div class="pages">
                     <button onclick="callPage(event)" id="previous">previous</button>
                     <button onclick="callPage(event)" id="next">next</button>
                 </div>
             </section>
-            <section class="add-expense">
-                <h3>Add Expense</h3>
-                <form onsubmit="saveExpense(event)" method="POST">
-                    <label for="">Category: 
-                    <select id="category" name="category" >
-                        <option value="petrol">petrol</option>
-                        <option value="medicines">medicines</option>
-                        <option value="fruits">fruits</option>
-                        <option value="vegetables">vegetables</option>
-                    </select></label>
-                    <input type="text" name="id" id="id" style="display: none;">
-                    <input type="text" name="description" id="description" placeholder="Describe here">
-                    <input type="text" name="amount" id="amount" placeholder="Amount">
-                    <button type="submit">Add Expense</button>
-                </form> 
-                <button id="newExp">new Expense</button>
-            </section>
+        
+          </section> 
 
+            <section class="debit">
+                <section class="cred-deb">
+                    <h3>Add Debit</h3>
+                    <form onsubmit="saveExpense(event)" method="POST">
+                        <label for="">Category: 
+                        <select id="category" name="category" >
+                            <option value="petrol">petrol</option>
+                            <option value="medicines">medicines</option>
+                            <option value="fruits">fruits</option>
+                            <option value="vegetables">vegetables</option>
+                        </select></label>
+                        <input type="text" name="id" id="id" style="display: none;">
+                        <input type="text" name="description" id="description" placeholder="Describe here">
+                        <input type="text" name="amount" id="amount" placeholder="Amount">
+                        <button type="submit">Add Debit</button>
+                    </form> 
+                    <button id="newExp">click to clear above fields</button>
+                </section>
+                <section class="expenses">
+                    <p>Expenses</p> 
+                    <input placeholder="Amount of expenses to load" name="name"/>
+                       
+                    <div id="debit-list" class="expense-list">
+                        <div class="list">
+                            <div class="show">
+                                <li id="cate">Category</li>
+                                <li>amount</li>
+                                <li id="desc">description</li>
+                            </div>
+                            <div class="perform">
+                                <button><span class="material-symbols-outlined">edit</span></button>
+                                <button><span class="material-symbols-outlined">delete</span></button> 
+                            </div>
+                        </div>
+                    </div> 
+                    <h5 id="sum-of-expense"></h5>
+                    <div class="pages">
+                        <button onclick="callPage(event)" id="previous">previous</button>
+                        <button onclick="callPage(event)" id="next">next</button>
+                    </div>
+                </section>
+            </section>
     </main>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
     <script src="./js/add-expense.js"></script>
+    <script src="./js/credit-expense.js"></script>
 </body>
 </html>

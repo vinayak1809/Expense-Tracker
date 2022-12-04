@@ -21,10 +21,12 @@ dotenv.config();
 
 const authRoutes = require("./api/server/routes/authRoutes");
 const userRoutes = require("./api/server/routes/userRoutes");
+const userCreditRoutes = require("./api/server/routes/userCreditRoutes");
 const premiumUserRoutes = require("./api/server/routes/premiumUserRoutes");
 
 app.use(authRoutes);
 app.use(userRoutes);
+app.use(userCreditRoutes);
 app.use(premiumUserRoutes);
 
 ////////////////////////////////////////////////////
@@ -38,6 +40,7 @@ const Expense = require("./api/server/src/models/expenses");
 const Order = require("./api/server/src/models/order");
 const ForgetPassword = require("./api/server/src/models/forgetPassword");
 const FileRecords = require("./api/server/src/models/FileRecords");
+const CreditExpense = require("./api/server/src/models/CreditExpenses");
 
 User.hasMany(Expense);
 Expense.belongsTo(User);
@@ -50,6 +53,9 @@ ForgetPassword.belongsTo(User);
 
 User.hasMany(FileRecords);
 FileRecords.belongsTo(User);
+
+User.hasMany(CreditExpense);
+CreditExpense.belongsTo(User);
 
 sequelize
   .sync()
