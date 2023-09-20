@@ -24,6 +24,7 @@ thirty.addEventListener("click", async function () {
       const checkoutSection = document.getElementById("checkoutSection");
       checkoutSection.style.display = "block";
 
+      console.log(result, "result");
       const rzp_text = document.getElementById("checkoutOrderId");
       rzp_text.value = result.data.order.id;
     });
@@ -40,7 +41,7 @@ threeSixFive.addEventListener("click", async function () {
         headers: { authorization: token },
       }
     )
-    .then(() => {
+    .then((result) => {
       alert("order created!");
       const payment_buttons = document.getElementById("payment_buttons");
       payment_buttons.style.display = "none";

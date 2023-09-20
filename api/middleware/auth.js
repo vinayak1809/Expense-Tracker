@@ -11,8 +11,8 @@ const authenticate = (req, res, next) => {
 
     next();
   } catch (err) {
-    console.log(err);
     return res.status(401).json({ success: false, message: "login first" });
   }
 };
+
 module.exports = { authenticate };

@@ -9,7 +9,7 @@ const CreditExpense = sequelize.define("CreditExpense", {
     primaryKey: true,
   },
   description: { type: Sequelize.STRING, unique: false },
-  amount: { type: Sequelize.STRING, allowNull: false },
+  creditAmount: { type: Sequelize.STRING, allowNull: false },
 });
 
 module.exports = CreditExpense;

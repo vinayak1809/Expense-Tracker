@@ -17,4 +17,10 @@ router.get(
   addCreditExpense.getCreditExpense
 );
 
+router.get(
+  "/get-edit-credit-expense",
+  middleware.authenticate,
+  addCreditExpense.getEditCreditExpense
+);
+
 module.exports = router;

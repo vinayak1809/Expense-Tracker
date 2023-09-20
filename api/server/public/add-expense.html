@@ -33,7 +33,7 @@
                     <input type="text" name="amount" id="amount" placeholder="Amount">
                     <button type="submit">Credit</button>
                 </form> 
-                <button id="newExp">click to clear above fields</button>
+                <button id="newCre">click to clear above fields</button>
             </section>
             <section class="expenses">
                 <p>Credit Expenses</p> 
@@ -65,15 +65,15 @@
                     <h3>Add Debit</h3>
                     <form onsubmit="saveExpense(event)" method="POST">
                         <label for="">Category: 
-                        <select id="category" name="category" >
+                        <select id="categoryDeb" name="category" >
                             <option value="petrol">petrol</option>
                             <option value="medicines">medicines</option>
                             <option value="fruits">fruits</option>
                             <option value="vegetables">vegetables</option>
                         </select></label>
-                        <input type="text" name="id" id="id" style="display: none;">
-                        <input type="text" name="description" id="description" placeholder="Describe here">
-                        <input type="text" name="amount" id="amount" placeholder="Amount">
+                        <input type="text" name="id" id="idDeb" style="display: none;">
+                        <input type="text" name="description" id="descriptionDeb" placeholder="Describe here">
+                        <input type="text" name="amount" id="amountDeb" placeholder="Amount">
                         <button type="submit">Add Debit</button>
                     </form> 
                     <button id="newExp">click to clear above fields</button>

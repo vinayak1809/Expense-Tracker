@@ -1,8 +1,11 @@
 const express = require("express");
 const Expenses = require("../src/models/expenses");
+const CreditExpense = require("../src/models/CreditExpenses");
 const JSAlert = require("alert");
 const sequelize = require("sequelize");
 const page = 2;
+
+// Debit Expenses
 
 exports.getExpenses = async (req, res, next) => {
   const page = +req.query.page || 1;

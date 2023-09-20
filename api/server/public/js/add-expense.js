@@ -200,10 +200,12 @@ async function getEditExpense(id) {
     })
     .then((result) => {
       const expense = result.data.expense[0];
-      document.getElementById("id").value = expense.id;
-      document.getElementById("category").value = expense.category;
-      document.getElementById("description").value = expense.description;
-      document.getElementById("amount").value = expense.amount;
+
+      console.log(expense.category, "result");
+      document.getElementById("idDeb").value = expense.id;
+      document.getElementById("categoryDeb").value = expense.category;
+      document.getElementById("descriptionDeb").value = expense.description;
+      document.getElementById("amountDeb").value = expense.amount;
     })
     .catch((err) => {
       console.log("error in edit expense", err);
@@ -238,6 +240,7 @@ const logout = document.getElementById("logout");
 
 logout.addEventListener("click", () => {
   localStorage.clear();
+  Window.location.href = "http://localhost:4000/mail.html";
 });
 
 ////////////////////////////////////////////////////
@@ -246,8 +249,8 @@ logout.addEventListener("click", () => {
 
 const newExp = document.getElementById("newExp");
 newExp.addEventListener("click", () => {
-  document.getElementById("id").value = "";
-  document.getElementById("category").value = "petrol";
-  document.getElementById("description").value = "";
-  document.getElementById("amount").value = "";
+  document.getElementById("idDeb").value = "";
+  document.getElementById("categoryDeb").value = "petrol";
+  document.getElementById("descriptionDeb").value = "";
+  document.getElementById("amountDeb").value = "";
 });
