@@ -43,6 +43,9 @@ window.addEventListener("DOMContentLoaded", async () => {
         result.data.creditExpList,
         result.data.sum[0]["SUM(`creditAmount`)"]
       );
+
+      debitMoney = result.data.sum[0]["SUM(`creditAmount`)"];
+      totalExpense();
     });
 });
 
@@ -102,3 +105,10 @@ newCre.addEventListener("click", () => {
   document.getElementById("description").value = "";
   document.getElementById("amount").value = "";
 });
+
+const totalExpense = () => {
+  const money = document.getElementById("remaining-money");
+  const balance = creditMoney - debitMoney;
+
+  money.innerHTML = `<p>Balance : ${balance}</p>`;
+};

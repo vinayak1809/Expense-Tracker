@@ -26,11 +26,13 @@ exports.postOrder = (req, res, next) => {
       key_id: process.env.RZP_KEY_ID,
       key_secret: process.env.RZP_KEY_SECRET,
     });
+
     const amount = req.body.amount;
     const currency = "INR";
     const receipt = "yearlypackage";
 
     rzp.orders.create({ amount, currency, receipt }, (err, order) => {
+      console.log(order, "rzprzprzp");
       if (!err) {
         Order.create({
           userId: req.id,

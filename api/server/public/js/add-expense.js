@@ -6,6 +6,9 @@ const previous = document.getElementById("previous");
 const next = document.getElementById("next");
 var itemNum = localStorage.getItem("NumberOfExpense");
 
+var creditMoney = "";
+var debitMoney = "";
+
 if (token) {
   document.getElementById("login").classList.add("display-nav");
   document.getElementById("signup").classList.add("display-nav");
@@ -118,6 +121,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       const rows = result.data.expense.rows;
       const sumOfExpense = result.data.sum[0]["SUM(`amount`)"];
 
+      creditMoney = sumOfExpense;
       showExpense(rows, sumOfExpense);
     })
     .catch((err) => {

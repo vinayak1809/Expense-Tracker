@@ -142,3 +142,9 @@ form > button{
     justify-content: center;
     width: 50%;
 }
+
+#remaining-money{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
