@@ -1,22 +1,40 @@
 # Expense-Tracker
-Expense-Tracker with Express.js and MySQL. This Web-application contains features like: <br>
-     &nbsp;> &nbsp; User can Login and Sign-up      <br>                                                                                                        &nbsp;> &nbsp; User can add, remove and edit expense <br> 
-     &nbsp;> &nbsp; Can take advantages of Premium-Membership using RazorPay <br>
-     &nbsp;> &nbsp; Premium-Membership features like Dark-mode and download the pdf of expense report<br>
+
+> This web app is a web-based application designed to help individuals manage their finances by recording and categorizing expenses. These app is typically used to keep track of spending, credits, and gain insights into financial habits.
+
+
+## Features
+
+   * Secure login, sign-up, and authentication using bcrypt.
+   * Track both credit (e.g., salary) and spending.
+   * Password change functionality with SendGrid integration.
+   * Access premium account features, including Dark mode and PDF reports for financial transactions and gains.
+
+## Database: 
      
+   * User Table: Stores all User Credentials.
+   * Expenses Table: Stores all Users spendings.
+   * CreditExpenses Table: Stores all Users gains(e.g Salary).
+   * Order Table: Premium membership's payment details.
+   * FileRecords Table: Stores user generated file pdf links/location. 
 
-# Requirements
-     1. Node.js and Express.js
-     2. MySQL
+## Tech Stack
 
-# Setup
-```
+  * Frontend: Html, Css and Javascript
+  * Backend: Express.js, MySQL, Sequelize and bcrypt
+  * Other: Sendgrid, Razorpay, cors, handlebars and puppeteer
+
+## Setup
+     
+   ```bash
      $ git clone https://github.com/vinayak1809/Expense-Tracker.git
      $ cd Expense-Tracker   
-     $ npm i
-     $ Change Database Username and Pasword 
-```
-# Run the Project
-```
+     $ npm install
      $ npm start
-```
+   ```
+     
+## Tools
+
+  * Visual Studio Code
+  * Postman
+  * Git
